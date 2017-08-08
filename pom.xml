@@ -18,6 +18,7 @@
 	<modules>
 		<module>barcode-oauth</module>
 		<module>barcode-api</module>
+		<module>barcode-web</module>
 	</modules>
 
 	<build>
