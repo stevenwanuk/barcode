@@ -9,12 +9,17 @@
 	<artifactId>barcode-web</artifactId>
 	<name>barcode-web</name>
 	<description>barcode-web</description>
+
+	<properties>
+		<npm.executable>npm</npm.executable>
+		<ng.executable>ng</ng.executable>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
 				<configuration>
 					<excludes>
 						<exclude>ngapp/**</exclude>
@@ -24,7 +29,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.0.0</version>
 				<configuration>
 					<excludes>
 						<exclude>ngapp/**</exclude>
@@ -34,14 +38,13 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.5.0</version>
 				<executions>
 					<execution>
 						<id>exec-npm-install</id>
 						<phase>generate-sources</phase>
 						<configuration>
 							<workingDirectory>${project.basedir}/src/main/ngapp</workingDirectory>
-							<executable>npm</executable>
+							<executable>${npm.executable}</executable>
 							<arguments>
 								<argument>install</argument>
 							</arguments>
@@ -55,10 +58,10 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<workingDirectory>${project.basedir}/src/main/ngapp</workingDirectory>
-							<executable>ng</executable>
+							<executable>${ng.executable}</executable>
 							<arguments>
 								<argument>build</argument>
-								<argument>--base-href=/ngfirst/ng/</argument>
+								<argument>--base-href=/barcode-web/</argument>
 							</arguments>
 						</configuration>
 						<goals>
@@ -69,4 +72,19 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>platform-windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- Override the executable names for Windows -->
+				<npm.executable>npm.cmd</npm.executable>
+				<ng.executable>ng.cmd</ng.executable>
+			</properties>
+		</profile>
+	</profiles>
 </project>
