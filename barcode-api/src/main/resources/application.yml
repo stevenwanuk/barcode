@@ -1,0 +1,3 @@
+server:
+    contextPath: /barcode-api
+    port: 8082

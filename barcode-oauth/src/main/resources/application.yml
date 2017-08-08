@@ -1,0 +1,17 @@
+server:
+    contextPath: /barcode-oauth
+    port: 8081
+oauth:
+    static:
+        clients:
+        -   clientId: implicitClientId
+            clientSecret: secret
+            authorizedGrantTypes: implicit
+            scope: read
+            autoApproveScopes: true
+        -   clientId: passwordClientId
+            clientSecret: secret
+            authorizedGrantTypes: password, authorization_code, refresh_token
+            scope: read
+            accessTokenValiditySeconds: 120
+            refreshTokenValiditySeconds: 3600
