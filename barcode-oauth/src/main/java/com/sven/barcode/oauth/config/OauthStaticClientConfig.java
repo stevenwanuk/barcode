@@ -14,7 +14,6 @@ public class OauthStaticClientConfig
 
     private List<BaseClientDetails> clients;
 
-
     public List<BaseClientDetails> getClients()
     {
         return clients;
@@ -24,7 +23,7 @@ public class OauthStaticClientConfig
     {
         this.clients = clients;
     }
-    
+
     @Bean("oauth-static-clients")
     public List<BaseClientDetails> clients()
     {

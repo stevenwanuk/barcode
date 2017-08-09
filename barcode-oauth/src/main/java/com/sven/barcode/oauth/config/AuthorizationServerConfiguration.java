@@ -24,11 +24,16 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter
 {
 
-    @Autowired @Qualifier("oauth-static-clients") private List<BaseClientDetails> staticClients;
+    @Autowired
+    @Qualifier("oauth-static-clients")
+    private List<BaseClientDetails> staticClients;
 
-    @Autowired private TokenStore tokenStore;
+    @Autowired
+    private TokenStore tokenStore;
 
-    @Autowired @Qualifier("authenticationManagerBean") private AuthenticationManager authenticationManager;
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
 
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception
@@ -41,27 +46,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                     throws ClientRegistrationException
             {
 
-                return staticClients.stream()
-                                    .filter(s -> s.getClientId().equalsIgnoreCase(clientId))
-                                    .findAny()
-                                    .orElseThrow(
-                                            () -> new ClientRegistrationException(clientId));
+                return staticClients.stream().filter(s -> s.getClientId().equalsIgnoreCase(
+                        clientId)).findAny().orElseThrow(
+                                () -> new ClientRegistrationException(clientId));
             }
 
         });
 
-        // clients.inMemory()
-        // .withClient("implicitClientId")
-        // .authorizedGrantTypes("implicit")
-        // .scopes("read")
-        // .autoApprove(true)
-        // .and()
-        // .withClient("passwordClientId")
-        // .secret("secret")
-        // .authorizedGrantTypes("password", "authorization_code", "refresh_token")
-        // .scopes("read")
-        // .accessTokenValiditySeconds(120)
-        // .refreshTokenValiditySeconds(120);
     }
 
     @Override
@@ -70,10 +61,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     {
         final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(new SimpleTokenEnhancer()));
-        endpoints.tokenStore(tokenStore)
-                 .tokenEnhancer(tokenEnhancerChain)
-                 // .userApprovalHandler(userApprovalHandler)
-                 .authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore).tokenEnhancer(tokenEnhancerChain)
+                // .userApprovalHandler(userApprovalHandler)
+                .authenticationManager(authenticationManager);
     }
 
     @Override
@@ -82,5 +72,4 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     {
         oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
-
 }

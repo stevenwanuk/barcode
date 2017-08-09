@@ -36,6 +36,10 @@ public class OAuth2SecurityConfiguration extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable().anonymous().disable().authorizeRequests().antMatchers(
                 "/oauth/token").permitAll();
+
+        // http.authorizeRequests().antMatchers("/login").permitAll().antMatchers(
+        // "/oauth/token/revokeById/**").permitAll().antMatchers(
+        // "/tokens/**").permitAll().anyRequest().authenticated().and().formLogin().permitAll().and().csrf().disable();
     }
 
     public void configAuthentication(final AuthenticationManagerBuilder auth)

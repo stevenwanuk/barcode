@@ -12,32 +12,39 @@ import org.springframework.stereotype.Repository;
 import com.sven.barcode.oauth.model.User;
 
 @Repository
-public class UserRepository {
+public class UserRepository
+{
 
-	private List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@PostConstruct
-	public void init() {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	    String pwd = passwordEncoder.encode("123");
-		users.add(new User("stevenwanuk@gmail.com", pwd, "bestcompany"));
-		users.add(new User("stevenwanuk1@gmail.com", pwd, "bestcompany"));
-		users.add(new User("stevenwanuk2@gmail.com", pwd, "bestcompany"));
-		
-	}
+    @PostConstruct
+    public void init()
+    {
 
-	public User getByEmail(final String email) {
-		return this.users.stream().filter(s -> s.getEmail().equalsIgnoreCase(email)).findAny().orElse(null);
-	}
+        String pwd = passwordEncoder.encode("123");
+        users.add(new User("stevenwanuk@gmail.com", pwd, "bestcompany"));
+        users.add(new User("stevenwanuk1@gmail.com", pwd, "bestcompany"));
+        users.add(new User("stevenwanuk2@gmail.com", pwd, "bestcompany"));
 
-	public List<User> getAll() {
-		return users;
-	}
+    }
 
-	public User getUserByEmailAndPassword(final String email, final String pwd) {
-		return this.users.stream().filter(s -> s.getEmail().equalsIgnoreCase(email) && s.getPwd().equalsIgnoreCase(pwd))
-				.findAny().orElse(null);
-	}
+    public User getByEmail(final String email)
+    {
+        return this.users.stream().filter(
+                s -> s.getEmail().equalsIgnoreCase(email)).findAny().orElse(null);
+    }
+
+    public List<User> getAll()
+    {
+        return users;
+    }
+
+    public User getUserByEmailAndPassword(final String email, final String pwd)
+    {
+        return this.users.stream().filter(s -> s.getEmail().equalsIgnoreCase(email)
+                && s.getPwd().equalsIgnoreCase(pwd)).findAny().orElse(null);
+    }
 }

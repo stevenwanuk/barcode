@@ -13,26 +13,31 @@ import com.sven.barcode.oauth.model.UserPrincipal;
 import com.sven.barcode.oauth.repository.UserRepository;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService
+{
 
-	@Autowired
-	private UserRepository repository;
+    @Autowired
+    private UserRepository repository;
 
-	public User getUserByEmailAndPassword(final String email, final String pwd) {
+    public User getUserByEmailAndPassword(final String email, final String pwd)
+    {
 
-		return repository.getUserByEmailAndPassword(email, pwd);
-	}
+        return repository.getUserByEmailAndPassword(email, pwd);
+    }
 
-	public List<User> getAll() {
-		return repository.getAll();   
-	}
+    public List<User> getAll()
+    {
+        return repository.getAll();
+    }
 
-	@Override
-	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-		User user = repository.getByEmail(email);
-		if (user != null)
-			return new UserPrincipal(user);
-		else
-			throw new UsernameNotFoundException("no user found");
-	}
+    @Override
+    public UserDetails loadUserByUsername(final String email)
+            throws UsernameNotFoundException
+    {
+        User user = repository.getByEmail(email);
+        if (user != null)
+            return new UserPrincipal(user);
+        else
+            throw new UsernameNotFoundException("no user found");
+    }
 }
