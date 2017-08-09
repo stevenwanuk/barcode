@@ -34,7 +34,6 @@ export class OauthService {
     }
 
     saveToken(token) {
-        alert(token);
         const expireDate = new Date().getTime() + (1000 * token.expires_in);
 
         const cookieOption = new CookieOptions();
@@ -42,5 +41,18 @@ export class OauthService {
 
         this._cookieService.put('access_token', token.access_token, cookieOption);
         console.log('Obtained Access token');
+
+        this._router.navigate(['/']);
+    }
+
+    checkCredentials() {
+        if (!this._cookieService.get('access_token')) {
+            this._router.navigate(['/login']);
+        }
+    }
+
+    logout() {
+        this._cookieService.remove('access_token');
+        this._router.navigate(['/login']);
     }
 }
