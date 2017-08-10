@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sven.barcode.api.exception.ProductNotFound;
@@ -20,17 +21,23 @@ public class ProductController
     @Autowired
     private ProductService productService;
 
-    @RequestMapping("/products/{id}")
+    @RequestMapping(value= "/products/{id}", method = RequestMethod.GET)
     public Product getItem(@PathVariable final String id)
     {
 
         return this.productService.getProductById(id).orElseThrow(ProductNotFound::new);
     }
 
-    @RequestMapping("products")
+    @RequestMapping(value= "products", method = RequestMethod.GET)
     public List<Product> getAll()
     {
         return productService.getAll();
+    }
+    
+    @RequestMapping(value= "/products/{id}", method = RequestMethod.DELETE)
+    public Product delete(@PathVariable final String id)
+    {
+        return productService.delete(id).orElseThrow(ProductNotFound::new);
     }
 
 }

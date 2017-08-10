@@ -25,6 +25,30 @@ export class ProductService {
         const options = new RequestOptions({ headers: headers });
         return this._http.get(AppSetting.RESOURCE_BASE_API_URL + 'products', options)
             .map((res: Response) => res.json())
-            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+            .catch(this.handleError);
+    }
+
+    delete(id: string): Observable<Product> {
+
+
+        const headers = new Headers({
+            'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Authorization': 'Bearer ' + this._cookieService.get('access_token')
+        });
+        console.log(headers.get('Authorization'));
+        const options = new RequestOptions({ headers: headers });
+        const url = AppSetting.RESOURCE_BASE_API_URL + 'products/' + id;
+        console.log('trying to delete product:' + id + ' by url:' + url);
+
+        return this._http.delete(url, options)
+            .map((res: Response) => res.json())
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any) {
+        const errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 }

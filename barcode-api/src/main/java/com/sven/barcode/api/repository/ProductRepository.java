@@ -34,4 +34,14 @@ public class ProductRepository
     {
         return mockProducts.stream().filter(s -> s.getId().equalsIgnoreCase(id)).findAny();
     }
+    
+    public Optional<Product> delete(final String id) {
+        
+        Optional<Product> productOptional = this.getProductById(id);
+        if (productOptional.isPresent()) {
+            mockProducts.remove(productOptional.get());
+        }
+        
+        return productOptional;
+    }
 }

@@ -15,12 +15,23 @@ export class ProductComponent implements OnInit {
   constructor(private _productService: ProductService) { }
 
   ngOnInit() {
+    this.load();
   }
 
   load() {
 
     this._productService.getProducts().subscribe(data => this.products = data,
       error => alert(error));
+  }
+
+  delete(product: Product) {
+    console.log('delete product :' + product.id);
+    this._productService.delete(product.id).subscribe(data => {
+      const index = this.products.indexOf(product);
+      this.products.splice(index, 1);
+    });
+
+
   }
 
 }

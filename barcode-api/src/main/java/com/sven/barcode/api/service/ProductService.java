@@ -25,4 +25,7 @@ public class ProductService
         return this.productRepository.getProductById(id);
     }
 
+    public Optional<Product> delete(final String id) { 
+        return this.productRepository.delete(id);
+    }
 }

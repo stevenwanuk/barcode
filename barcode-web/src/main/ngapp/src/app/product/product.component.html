@@ -21,7 +21,7 @@
         <td>{{product.id}}</td>
         <td>{{product.name}}</td>
         <td>{{product.description}}</td>
-        <td><button class="btn btn-default" ng-click="Delete($index)">Delete</button></td>
+        <td><button class="btn btn-default" (click)="delete(product)" type="submit">Delete</button></td>
       </tr>
       <tr>
         <td colspan="5">Total {{products.length}} Products</td>
