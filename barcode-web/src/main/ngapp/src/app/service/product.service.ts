@@ -7,6 +7,8 @@ import { Product } from '../model/product';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { AppSetting } from './../app-setting';
+
 @Injectable()
 export class ProductService {
 
@@ -19,9 +21,9 @@ export class ProductService {
             'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
             'Authorization': 'Bearer ' + this._cookieService.get('access_token')
         });
-        alert(this._cookieService.get('access_token'));
+
         const options = new RequestOptions({ headers: headers });
-        return this._http.get('http://localhost:8082/barcode-api/products', options)
+        return this._http.get(AppSetting.RESOURCE_BASE_API_URL + 'products', options)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

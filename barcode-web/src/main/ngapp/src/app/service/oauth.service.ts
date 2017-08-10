@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { AppSetting } from './../app-setting';
+
 
 @Injectable()
 export class OauthService {
@@ -16,16 +18,16 @@ export class OauthService {
         const params = new URLSearchParams();
         params.append('username', loginData.username);
         params.append('password', loginData.password);
-        params.append('grant_type', 'password');
-        params.append('client_id', 'passwordClientId');
+        params.append('grant_type', AppSetting.OAUTH_CLIENT_GRANT_TYPE);
+        params.append('client_id', AppSetting.OAUTH_CLIENT_ID);
 
         const headers = new Headers({
             'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
-            'Authorization': 'Basic ' + btoa('passwordClientId:secret')
+            'Authorization': 'Basic ' + btoa(AppSetting.OAUTH_CLIENT_ID + ':' + AppSetting.OAUTH_CLIENT_SECRET)
         });
         const options = new RequestOptions({ headers: headers });
         console.log(params.toString());
-        this._http.post('http://localhost:8081/barcode-oauth/oauth/token', params.toString(), options)
+        this._http.post(AppSetting.OAUTH_TOKEN_API_URL, params.toString(), options)
             .map(res => res.json())
             .subscribe(
             data => this.saveToken(data),

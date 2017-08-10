@@ -1,14 +1,31 @@
-<div class="container" *ngFor="let product of products">
-  <h1 class="col-sm-12">Foo Details</h1>
-  <div class="col-sm-12">
-    <label class="col-sm-3">ID</label> <span>{{product.id}}</span>
-  </div>
-  <div class="col-sm-12">
-    <label class="col-sm-3">Name</label> <span>{{product.name}}</span>
-  </div>
+<section class="container">
 
-</div>
+  <header class="header">
+    <h1 class="col-sm-12">Products
+      <button class="btn btn-default" (click)="load()" type="submit">load</button>
+    </h1>
 
-<div class="col-sm-12">
-  <button class="btn btn-primary" (click)="load()" type="submit">load all products</button>
-</div>
+  </header>
+
+  <section class="col-sm-12">
+    <table class="table table-hover table-striped">
+      <tr>
+        <th>Status</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+      <tr *ngFor="let product of products">
+        <td><input type="checkbox" ng-model="record.include"></td>
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td><button class="btn btn-default" ng-click="Delete($index)">Delete</button></td>
+      </tr>
+      <tr>
+        <td colspan="5">Total {{products.length}} Products</td>
+      </tr>
+    </table>
+  </section>
+</section>
