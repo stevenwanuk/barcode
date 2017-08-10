@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { AppSetting } from './../app-setting';
+import {Token} from './../model/token';
 
 
 @Injectable()
@@ -14,7 +15,7 @@ export class OauthService {
 
     constructor(private _router: Router, private _http: Http, private _cookieService: CookieService) { }
 
-    obtainAccessToken(loginData) {
+    obtainAccessToken(loginData): Observable<Token> {
         const params = new URLSearchParams();
         params.append('username', loginData.username);
         params.append('password', loginData.password);
@@ -27,12 +28,16 @@ export class OauthService {
         });
         const options = new RequestOptions({ headers: headers });
         console.log(params.toString());
-        this._http.post(AppSetting.OAUTH_TOKEN_API_URL, params.toString(), options)
+        return this._http.post(AppSetting.OAUTH_TOKEN_API_URL, params.toString(), options)
             .map(res => res.json())
-            .subscribe(
-            data => this.saveToken(data),
-            err => alert('Invalid Credentials with error:' + err)
-            );
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any) {
+        const errMsg = (error.message) ? error.message :
+            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg);
+        return Observable.throw(errMsg);
     }
 
     saveToken(token) {
