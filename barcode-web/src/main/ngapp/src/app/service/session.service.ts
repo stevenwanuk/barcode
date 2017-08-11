@@ -9,7 +9,7 @@ export class SessionService {
 
     private user: User = new User();
 
-    constructor(private _router: Router, private _oauthService: OauthService) { console.log('new instance of SessionService') }
+    constructor(private _router: Router, private _oauthService: OauthService) { console.log('new instance of SessionService'); }
 
     login(loginData) {
         this._oauthService.obtainAccessToken(loginData).subscribe(data => {
@@ -36,6 +36,7 @@ export class SessionService {
 
     logout() {
         this.user = new User();
+        this._router.navigate(['/login']);
     }
 
 }

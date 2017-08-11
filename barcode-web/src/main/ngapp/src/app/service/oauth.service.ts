@@ -13,7 +13,7 @@ import {Token} from './../model/token';
 @Injectable()
 export class OauthService {
 
-    constructor(private _router: Router, private _http: Http, private _cookieService: CookieService) { }
+    constructor(private _router: Router, private _http: Http) { }
 
     obtainAccessToken(loginData): Observable<Token> {
         const params = new URLSearchParams();
@@ -38,28 +38,5 @@ export class OauthService {
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg);
         return Observable.throw(errMsg);
-    }
-
-    saveToken(token) {
-        const expireDate = new Date().getTime() + (1000 * token.expires_in);
-
-        const cookieOption = new CookieOptions();
-        cookieOption.expires = new Date(expireDate);
-
-        this._cookieService.put('access_token', token.access_token, cookieOption);
-        console.log('Obtained Access token');
-
-        this._router.navigate(['/']);
-    }
-
-    checkCredentials() {
-        if (!this._cookieService.get('access_token')) {
-            this._router.navigate(['/login']);
-        }
-    }
-
-    logout() {
-        this._cookieService.remove('access_token');
-        this._router.navigate(['/login']);
     }
 }
