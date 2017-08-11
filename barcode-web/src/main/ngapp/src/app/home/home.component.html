@@ -1,6 +1,6 @@
 <div class="container" >
     <div class="content">
-        <span>Welcome !!</span>
+        <span>Welcome {{user.email}} !!</span>
         <!-- when do route.navigate inside the click event, the chrome will submit the form. the "false" is aim to solve this issue -->
         <a class="btn btn-default pull-right"  (click)="logout();false" href="#">Logout</a>
     </div>

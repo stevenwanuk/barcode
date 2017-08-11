@@ -10,7 +10,9 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/product.component';
-
+import {SessionService} from './service/session.service';
+import {AuthGuard} from './app-authGuard';
+import {OauthService} from './service/oauth.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import { ProductComponent } from './product/product.component';
     AppRoutingModule,
     HttpModule,
   ],
-  providers: [CookieService],
+  providers: [CookieService, SessionService, AuthGuard, OauthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

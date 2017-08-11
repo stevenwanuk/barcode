@@ -1,5 +1,8 @@
+import { Token } from './token';
+
 
 export class User {
+  isLogin: boolean;
   email: string;
-  password: string;
+  token: Token;
 }
