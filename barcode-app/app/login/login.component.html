@@ -1,0 +1,14 @@
+<ActionBar class="action-bar" title="Login">
+
+</ActionBar>
+<StackLayout class="input-field">
+
+  <StackLayout class="hr-light"></StackLayout>
+  <TextField class="input" hint="Email Address" keyboardType="email" [(ngModel)]="loginData.username" autocorrect="false" autocapitalizationType="none"></TextField>
+
+  <StackLayout class="hr-light"></StackLayout>
+  <TextField class="input" hint="Password" [(ngModel)]="loginData.password" secure="true"></TextField>
+  <StackLayout class="hr-light"></StackLayout>
+  <Button [text]="'login'" class="submit-button" (tap)="login()"></Button>
+
+</StackLayout>
